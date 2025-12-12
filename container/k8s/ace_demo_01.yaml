@@ -48,7 +48,7 @@ spec:
       containers:
         - name: ace-demo-01-contenedor
           image: quay.io/ivanstalyn/ace_demo_01:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           resources:
             limits:
               cpu: 300m

@@ -9,13 +9,15 @@ COPY ace_demo_01/ proyectos/ace_demo_01/
 COPY ace_demo_dfdl/ proyectos/ace_demo_dfdl/
 COPY container/demo01ocp.properties proyectos/overrides/
 COPY container/shell/*.sh /usr/local/bin/
-RUN chmod +rx /usr/local/bin/*.sh && \
+RUN chmod +rx /usr/local/bin/ace*.sh && \
     . /opt/ibm/ace-12/server/bin/mqsiprofile && \
     ibmint package --compile-maps-and-schemas --input-path proyectos --output-bar-file /tmp/temp.bar  2>&1 | tee -a /tmp/deploys && \
     ibmint apply overrides proyectos/overrides/* --bar-file /tmp/temp.bar 2>&1 | tee -a /tmp/deploys && \
     ibmint deploy --input-bar-file /tmp/temp.bar --output-work-directory /home/aceuser/ace-server/ 2>&1 | tee -a /tmp/deploys && \
     ibmint optimize server --work-directory /home/aceuser/ace-server && \
     chown aceuser:aceuser -R /home/aceuser
+
+ENV BASH_ENV=/usr/local/bin/ace_env.sh    
     
 USER aceuser
 
