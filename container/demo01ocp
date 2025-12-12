@@ -4,7 +4,7 @@ USER 0
 
 COPY ace_demo_01/ proyectos/ace_demo_01/
 COPY ace_demo_dfdl/ proyectos/ace_demo_dfdl/
-COPY container/demo01.properties proyectos/overrides/
+COPY container/demo01ocp.properties proyectos/overrides/
 COPY container/shell/*.sh /usr/local/bin/
 RUN chmod +rx /usr/local/bin/*.sh && \
     chown aceuser:aceuser -R proyectos 
