@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ace_demo_01-svc
+  name: ace-demo-01-svc
   namespace: demo-rest-trama
   labels:
-    app: ace_demo_01-svc
+    app: ace-demo-01-svc
 spec:
   ports:
   - name: socket
@@ -13,12 +13,12 @@ spec:
     protocol: TCP
     targetPort: 7800
   selector:
-    app: ace_demo_01-pod
+    app: ace-demo-01-pod
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ace_demo_01-configmap
+  name: ace-demo-01-configmap
   namespace: demo-rest-trama
 data:
   ACE_SERVER_NAME: "isdemo"
@@ -29,24 +29,24 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ace_demo_01-deployment
+  name: ace-demo-01-deployment
   namespace: demo-rest-trama
   labels:
-    app: ace_demo_01-deploy
+    app: ace-demo-01-deploy
 spec:
   selector:
     matchLabels:
-      app: ace_demo_01-pod
+      app: ace-demo-01-pod
   replicas: 1
   template:
     metadata:
-      name: ace_demo_01-pod
+      name: ace-demo-01-pod
       namespace: demo-rest-trama
       labels:
-        app: ace_demo_01-pod
+        app: ace-demo-01-pod
     spec:
       containers:
-        - name: ace_demo_01-contenedor
+        - name: ace-demo-01-contenedor
           image: quay.io/ivanstalyn/ace_demo_01:latest
           imagePullPolicy: IfNotPresent
           resources:
@@ -58,4 +58,4 @@ spec:
               memory: 96Mi
           envFrom:
           - configMapRef:
-              name: ace_demo_01-configmap
+              name: ace-demo-01-configmap

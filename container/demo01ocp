@@ -1,3 +1,6 @@
+
+
+
 FROM icr.io/appc-dev/ace-server:12.0.4.0-r2-20220520-125302-amd64
 
 USER 0
@@ -7,7 +10,12 @@ COPY ace_demo_dfdl/ proyectos/ace_demo_dfdl/
 COPY container/demo01ocp.properties proyectos/overrides/
 COPY container/shell/*.sh /usr/local/bin/
 RUN chmod +rx /usr/local/bin/*.sh && \
-    chown aceuser:aceuser -R proyectos 
+    . /opt/ibm/ace-12/server/bin/mqsiprofile && \
+    ibmint package --compile-maps-and-schemas --input-path proyectos --output-bar-file /tmp/temp.bar  2>&1 | tee -a /tmp/deploys && \
+    ibmint apply overrides proyectos/overrides/* --bar-file /tmp/temp.bar 2>&1 | tee -a /tmp/deploys && \
+    ibmint deploy --input-bar-file /tmp/temp.bar --output-work-directory /home/aceuser/ace-server/ 2>&1 | tee -a /tmp/deploys && \
+    ibmint optimize server --work-directory /home/aceuser/ace-server && \
+    chown aceuser:aceuser -R /home/aceuser
     
 USER aceuser
 

@@ -10,17 +10,17 @@ COPY ace_demo_dfdl/ proyectos/ace_demo_dfdl/
 COPY container/demo01.properties proyectos/overrides/
 COPY container/shell/*.sh /usr/local/bin/
 RUN chmod +rx /usr/local/bin/*.sh && \
-    chown aceuser:aceuser -R proyectos 
+    . /opt/ibm/ace-12/server/bin/mqsiprofile && \
+    ibmint package --compile-maps-and-schemas --input-path proyectos --output-bar-file /tmp/temp.bar  2>&1 | tee -a /tmp/deploys && \
+    ibmint apply overrides proyectos/overrides/* --bar-file /tmp/temp.bar 2>&1 | tee -a /tmp/deploys && \
+    ibmint deploy --input-bar-file /tmp/temp.bar --output-work-directory /home/aceuser/ace-server/ 2>&1 | tee -a /tmp/deploys && \
+    ibmint optimize server --work-directory /home/aceuser/ace-server && \
+    chown aceuser:aceuser -R /home/aceuser
     
 USER aceuser
 
-ARG ACE_VERSION_SHORT
-ARG ACE_HTTP_INTERNAL_PORT
-ARG ACE_HTTPS_INTERNAL_PORT
-ARG ACE_ADMIN_REST_API_INTERNAL_PORT
+EXPOSE 7600 7800 7843
 
-EXPOSE ${ACE_HTTP_INTERNAL_PORT} ${ACE_HTTPS_INTERNAL_PORT} ${ACE_ADMIN_REST_API_INTERNAL_PORT}
-
-RUN echo ". /opt/ibm/ace-${ACE_VERSION_SHORT}/server/bin/mqsiprofile" >> /home/aceuser/.bashrc 
+RUN echo ". /opt/ibm/ace-12/server/bin/mqsiprofile" >> /home/aceuser/.bashrc 
 
 ENTRYPOINT ["ace_manage.sh"]
