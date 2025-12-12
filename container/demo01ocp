@@ -13,4 +13,6 @@ RUN chmod +rx /usr/local/bin/ace*.sh && \
 
 EXPOSE 7600 7800 7843
 
+ENV BASH_ENV=/usr/local/bin/ace_env.sh
+
 ENTRYPOINT ["ace_manage.sh"]
