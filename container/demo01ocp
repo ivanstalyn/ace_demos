@@ -1,5 +1,7 @@
 FROM icr.io/appc-dev/ace-server:12.0.4.0-r2-20220520-125302-amd64
 
+USER 0
+
 COPY ace_demo_01/ proyectos/ace_demo_01/
 COPY ace_demo_dfdl/ proyectos/ace_demo_dfdl/
 COPY container/demo01ocp.properties proyectos/overrides/
