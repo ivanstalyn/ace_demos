@@ -1,9 +1,4 @@
-
-
-
 FROM icr.io/appc-dev/ace-server:12.0.4.0-r2-20220520-125302-amd64
-
-USER 0
 
 COPY ace_demo_01/ proyectos/ace_demo_01/
 COPY ace_demo_dfdl/ proyectos/ace_demo_dfdl/
@@ -14,15 +9,8 @@ RUN chmod +rx /usr/local/bin/ace*.sh && \
     ibmint package --compile-maps-and-schemas --input-path proyectos --output-bar-file /tmp/temp.bar  2>&1 | tee -a /tmp/deploys && \
     ibmint apply overrides proyectos/overrides/* --bar-file /tmp/temp.bar 2>&1 | tee -a /tmp/deploys && \
     ibmint deploy --input-bar-file /tmp/temp.bar --output-work-directory /home/aceuser/ace-server/ 2>&1 | tee -a /tmp/deploys && \
-    ibmint optimize server --work-directory /home/aceuser/ace-server && \
-    chown aceuser:aceuser -R /home/aceuser
-
-ENV BASH_ENV=/usr/local/bin/ace_env.sh    
-    
-USER aceuser
+    ibmint optimize server --work-directory /home/aceuser/ace-server 
 
 EXPOSE 7600 7800 7843
-
-RUN echo ". /opt/ibm/ace-12/server/bin/mqsiprofile" >> /home/aceuser/.bashrc 
 
 ENTRYPOINT ["ace_manage.sh"]
