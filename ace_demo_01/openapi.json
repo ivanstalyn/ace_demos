@@ -1,0 +1,256 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ace_demo_01",
+    "version": "1.0.0",
+    "description": "ace_demo_01"
+  },
+  "servers": [
+    {
+      "url": "/ace_demo_01/v1"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Cliente": {
+        "type": "object",
+        "description": "Objeto cliente",
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Identificador del cliente"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre",
+            "description": "Nombre del cliente"
+          },
+          "apellido": {
+            "type": "string",
+            "title": "Apellido",
+            "description": "Apellido del cliente"
+          },
+          "direccion": {
+            "type": "string",
+            "title": "Direccion",
+            "description": "Direccion del cliente"
+          },
+          "ciudad": {
+            "type": "string",
+            "title": "Ciudad",
+            "description": "Ciudad del cliente"
+          },
+          "celular": {
+            "type": "string",
+            "title": "Celular",
+            "description": "Celular del cliente"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email",
+            "description": "Email del cliente"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "DetalleItem": {
+        "type": "object",
+        "description": "Objeto detalle item de factura",
+        "properties": {
+          "orden": {
+            "type": "string",
+            "title": "orden",
+            "description": "orden del item"
+          },
+          "codigo": {
+            "type": "string",
+            "title": "codigo",
+            "description": "codigo del item"
+          },
+          "producto": {
+            "type": "string",
+            "title": "producto",
+            "description": "producto del item"
+          },
+          "productoNombre": {
+            "type": "string",
+            "title": "productoNombre",
+            "description": "productoNombre del item"
+          },
+          "cantidad": {
+            "type": "number",
+            "format": "float",
+            "title": "cantidad",
+            "description": "cantidad del item"
+          },
+          "precio": {
+            "type": "number",
+            "format": "float",
+            "title": "precio",
+            "description": "precio del item"
+          },
+          "subTotal": {
+            "type": "number",
+            "format": "float",
+            "title": "subTotal",
+            "description": "subTotal del item"
+          },
+          "iva": {
+            "type": "number",
+            "format": "float",
+            "title": "iva",
+            "description": "iva del item"
+          },
+          "total": {
+            "type": "number",
+            "format": "float",
+            "title": "total",
+            "description": "total del item"
+          }
+        },
+        "required": [
+          "orden",
+          "codigo",
+          "producto",
+          "productoNombre",
+          "cantidad",
+          "precio",
+          "subTotal",
+          "iva",
+          "total"
+        ]
+      },
+      "Factura": {
+        "type": "object",
+        "description": "Objeto Factura",
+        "properties": {
+          "numero": {
+            "type": "string",
+            "title": "Número de factura"
+          },
+          "cliente": {
+            "title": "Datos del cliente",
+            "$ref": "#/components/schemas/Cliente"
+          },
+          "detalle": {
+            "type": "array",
+            "title": "Detalle de la factura",
+            "items": {
+              "$ref": "#/components/schemas/DetalleItem"
+            }
+          }
+        },
+        "required": [
+          "numero",
+          "cliente",
+          "detalle"
+        ]
+      }
+    },
+    "responses": {}
+  },
+  "paths": {
+    "/cliente/{id}": {
+      "parameters": [],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                }
+              }
+            },
+            "headers": {
+              "trx-id": {
+                "description": "Identificador de la transacción",
+                "schema": {
+                  "title": "Identificador de la transacción",
+                  "type": "string",
+                  "example": "2c5ea4c0-4067-11e9-9b5d-ab8dfbbd4bea"
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "example": "1712345678",
+            "required": true,
+            "schema": {
+              "title": "Identificador de cliente",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "trx-id",
+            "required": true,
+            "schema": {
+              "title": "Identificador de la transacción",
+              "type": "string"
+            },
+            "example": "2c5ea4c0-4067-11e9-9b5d-ab8dfbbd4bea"
+          }
+        ]
+      }
+    },
+    "/factura/{nro}": {
+      "parameters": [],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Factura"
+                }
+              }
+            },
+            "headers": {
+              "trx-id": {
+                "description": "Identificador de la transacción",
+                "schema": {
+                  "title": "Identificador de la transacción",
+                  "type": "string",
+                  "example": "2c5ea4c0-4067-11e9-9b5d-ab8dfbbd4bea"
+                },
+                "required": true
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "nro",
+            "in": "path",
+            "example": "002-003-000004743",
+            "required": true,
+            "schema": {
+              "title": "Número de la factura",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "trx-id",
+            "required": true,
+            "schema": {
+              "title": "Identificador de la transacción",
+              "type": "string"
+            },
+            "example": "2c5ea4c0-4067-11e9-9b5d-ab8dfbbd4bea"
+          }
+        ]
+      }
+    }
+  }
+}

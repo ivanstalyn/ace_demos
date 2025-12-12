@@ -1,0 +1,26 @@
+ARG ACE_VERSION
+ARG ACE_IMAGE_BASE
+
+FROM ${ACE_IMAGE_BASE}:${ACE_VERSION}
+
+USER 0
+
+COPY ace_demo_01/ proyectos/ace_demo_01/
+COPY ace_demo_dfdl/ proyectos/ace_demo_dfdl/
+COPY container/demo01.properties proyectos/overrides/
+COPY container/shell/*.sh /usr/local/bin/
+RUN chmod +rx /usr/local/bin/*.sh && \
+    chown aceuser:aceuser -R proyectos 
+    
+USER aceuser
+
+ARG ACE_VERSION_SHORT
+ARG ACE_HTTP_INTERNAL_PORT
+ARG ACE_HTTPS_INTERNAL_PORT
+ARG ACE_ADMIN_REST_API_INTERNAL_PORT
+
+EXPOSE ${ACE_HTTP_INTERNAL_PORT} ${ACE_HTTPS_INTERNAL_PORT} ${ACE_ADMIN_REST_API_INTERNAL_PORT}
+
+RUN echo ". /opt/ibm/ace-${ACE_VERSION_SHORT}/server/bin/mqsiprofile" >> /home/aceuser/.bashrc 
+
+ENTRYPOINT ["ace_manage.sh"]

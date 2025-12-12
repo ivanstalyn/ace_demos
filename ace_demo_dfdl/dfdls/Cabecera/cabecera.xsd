@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
+  xmlns:isofmt="http://www.ibm.com/dfdl/ACEDEMO_Format"
+  xmlns:isotyp="http://www.ibm.com/dfdl/ACEDEMO_Types"
+  targetNamespace="http://www.ibm.com/dfdl/Cabecera_Type">
+
+  <xs:import namespace="http://www.ibm.com/dfdl/ACEDEMO_Format"
+    schemaLocation="../Common/ACEDEMO_Format.xsd" />
+
+  <xs:import namespace="http://www.ibm.com/dfdl/ACEDEMO_Types"
+    schemaLocation="../Common/ACEDEMO_Types.xsd" />
+
+  <xs:annotation>
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+      <!-- Format annotation to apply default property values to all objects -->
+      <dfdl:format ref="isofmt:ACEDEMO_Format" />
+    </xs:appinfo>
+  </xs:annotation>
+
+  <xs:complexType name="Cabecera_Type">
+
+    <xs:sequence dfdl:separator="">
+
+      <xs:element name="FECHA_TIEMPO"
+        dfdl:length="14"
+        dfdl:textTrimKind="none"
+        type="isotyp:Type_n_dateTime" />
+
+
+      <xs:element name="TIPO_TRANSACCION"
+        dfdl:length="4"
+        dfdl:textTrimKind="none"
+        type="isotyp:Type_n_string" />
+
+      <xs:element name="CODIGO_RESPUESTA"
+        default="9999"
+        dfdl:length="4"
+        dfdl:textTrimKind="none"
+        type="isotyp:Type_n_string" />
+
+      <xs:element name="TRANSACCION_ID"
+        dfdl:length="36"
+        dfdl:textTrimKind="none"
+        type="isotyp:Type_uuidv4_string" />
+
+    </xs:sequence>
+
+
+  </xs:complexType>
+
+
+</xs:schema>

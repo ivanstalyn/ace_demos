@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    targetNamespace="http://www.ibm.com/dfdl/ACEDEMO_Types"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
+    xmlns:isofmt="http://www.ibm.com/dfdl/ACEDEMO_Format">
+    
+    <xs:import namespace="http://www.ibm.com/dfdl/ACEDEMO_Format" schemaLocation="ACEDEMO_Format.xsd"/>			
+
+    <xs:annotation>
+        <xs:appinfo source="http://www.ogf.org/dfdl/">
+            <!-- Format annotation to apply default property values to all objects -->  
+            <dfdl:format ref="isofmt:ACEDEMO_Format"/>
+        </xs:appinfo>
+    </xs:annotation>	
+    
+    <xs:simpleType 
+
+        name="Type_n_string"
+
+        dfdl:textStringJustification="right"
+        dfdl:textStringPadCharacter="0"
+        dfdl:textPadKind="padChar"
+        dfdl:lengthKind="explicit" >
+
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]+"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+
+    <xs:simpleType 
+
+        name="Type_a_string"
+
+        dfdl:textStringJustification="left"
+        dfdl:textStringPadCharacter="%SP;"
+        dfdl:textPadKind="padChar"
+        dfdl:lengthKind="explicit" >
+
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z]+"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+    
+    <xs:simpleType 
+        
+        name="Type_ans_string"
+
+        dfdl:textStringJustification="left"
+        dfdl:textStringPadCharacter="%SP;"
+        dfdl:textPadKind="padChar"
+        dfdl:lengthKind="explicit"
+        >
+
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+
+    <xs:simpleType
+
+        name="Type_n_or_a_string"
+
+        dfdl:lengthKind="explicit"
+        dfdl:textPadKind="padChar"
+
+        dfdl:textStringJustification="left" 
+        dfdl:textStringPadCharacter="%SP;"
+
+        dfdl:textNumberJustification="right"
+        dfdl:textNumberPadCharacter="0">
+
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]+|[A-Za-z ]+"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+
+    <xs:simpleType 
+
+        name="Type_celular_string"
+
+        dfdl:textStringJustification="right"
+        dfdl:textStringPadCharacter="%SP;"
+        dfdl:textPadKind="padChar"
+        dfdl:lengthKind="explicit" >
+
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9 ]+"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+
+    <xs:simpleType 
+
+        name="Type_uuidv4_string">
+
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+
+    <xs:simpleType 
+
+        name="Type_nro_factura_string">
+
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^[0-9]{3}-[0-9]{3}-[0-9]{9}$"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+
+    <xs:simpleType 
+    
+        name="Type_n_decimal"
+
+        dfdl:textNumberPattern="############0V00"
+        dfdl:textNumberPadCharacter="0" 
+        dfdl:textPadKind="padChar"
+        dfdl:textTrimKind="padChar" >
+
+		<xs:restriction base="xs:decimal">
+            <xs:totalDigits value="15"/>
+            <xs:fractionDigits value="2"/>
+        </xs:restriction>
+
+	</xs:simpleType>
+	
+	
+	<xs:simpleType
+        
+        name="Type_n_dateTime"
+
+        dfdl:representation="text"
+        dfdl:calendarPattern="yyyyMMddHHmmss"
+        dfdl:calendarPatternKind="explicit">
+
+		<xs:restriction base="xs:dateTime"/>
+
+	</xs:simpleType>
+	
+
+</xs:schema>

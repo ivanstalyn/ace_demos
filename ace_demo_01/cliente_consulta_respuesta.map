@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" xmlns:map="default" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.5.0">
+    <inlinedXMLSchema><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+          
+  
+          
+  
+  
+  <xsd:element name="trx-id" type="xsd:string"/>
+      
+
+
+</xsd:schema>
+]]></inlinedXMLSchema>
+    <input path="mbsharedlib://ace_demo_dfdl/dfdls/RESPONSE/RESPONSE.xsd" var="var3"/>
+    <input inlinedXMLSchema="true" path="../schema_0.xsd" var="var2"/>
+    <output path="jar:file://!com/ibm/etools/mft/map/xsds/predefined/JsonDomainMsg.xsd" var="var"/>
+    <output derivedFrom="MB:JSON_schema_in_swagger_document" path="/openapi.json" var="var1"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="in" uri="http://www.ibm.com/dfdl/Cabecera_Type"/>
+        <namespace kind="supplement" prefix="in2" uri="http://www.ibm.com/dfdl/CLIENTE_CONSULTA_RESPUESTA_Type"/>
+        <namespace kind="supplement" prefix="out" uri="http://www.ibm.com/iib/msl/json"/>
+        <namespace kind="supplement" prefix="in3" uri="http://www.ibm.com/dfdl/FACTURA_CONSULTA_RESPUESTA_Type"/>
+    </namespaces>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="cliente_consulta_respuesta">
+        <input path="$var3/mb:msg(ACEDEMO_RESPONSE,assembly,DFDL,Properties)" var="ComIbmMessageAssembly_ACEDEMO_RESPONSE"/>
+        <output namespace="http://www.ibm.com/iib/msl/json" path="$var/mb:msg(JSON,assembly,JSON,Properties,HTTPResponseHeader)" var="ComIbmMessageAssembly_JSON">
+            <cast derivedFrom="MB:JSON_operation_response" path="$ComIbmMessageAssembly_JSON/JSON/Data/type('anyType')" qualifier="{http://www.ibm.com/iib/msl/json}Cliente" ref="var1" var="anyType"/>
+            <cast castType="userDefined" path="$ComIbmMessageAssembly_JSON/HTTPResponseHeader/any" qualifier="trx-id" ref="var2" var="any2"/>
+        </output>
+        <move>
+            <input path="$ComIbmMessageAssembly_ACEDEMO_RESPONSE/Properties"/>
+            <output path="$ComIbmMessageAssembly_JSON/Properties"/>
+        </move>
+        <move>
+            <input path="$ComIbmMessageAssembly_ACEDEMO_RESPONSE/ACEDEMO_RESPONSE/CLIENTE_CONSULTA_RESPUESTA/CEDULA"/>
+            <output path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/id"/>
+        </move>
+        <move>
+            <input path="$ComIbmMessageAssembly_ACEDEMO_RESPONSE/ACEDEMO_RESPONSE/CLIENTE_CONSULTA_RESPUESTA/NOMBRE"/>
+            <output path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/nombre"/>
+        </move>
+        <move>
+            <input path="$ComIbmMessageAssembly_ACEDEMO_RESPONSE/ACEDEMO_RESPONSE/CLIENTE_CONSULTA_RESPUESTA/APELLIDO"/>
+            <output path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/apellido"/>
+        </move>
+        <move>
+            <input path="$ComIbmMessageAssembly_ACEDEMO_RESPONSE/ACEDEMO_RESPONSE/CABECERA/TRANSACCION_ID" var="TRANSACCION_ID"/>
+            <output path="$ComIbmMessageAssembly_JSON/HTTPResponseHeader/trx-id"/>
+        </move>
+        <move>
+            <input path="$ComIbmMessageAssembly_ACEDEMO_RESPONSE/ACEDEMO_RESPONSE/CLIENTE_CONSULTA_RESPUESTA/EMAIL"/>
+            <output path="$ComIbmMessageAssembly_JSON/JSON/spath('Data',2)/email"/>
+        </move>
+    </mappingDeclaration>
+</mappingRoot>

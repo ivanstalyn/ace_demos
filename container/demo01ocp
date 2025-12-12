@@ -1,0 +1,18 @@
+FROM icr.io/appc-dev/ace-server:12.0.4.0-r2-20220520-125302-amd64
+
+USER 0
+
+COPY ace_demo_01/ proyectos/ace_demo_01/
+COPY ace_demo_dfdl/ proyectos/ace_demo_dfdl/
+COPY container/demo01.properties proyectos/overrides/
+COPY container/shell/*.sh /usr/local/bin/
+RUN chmod +rx /usr/local/bin/*.sh && \
+    chown aceuser:aceuser -R proyectos 
+    
+USER aceuser
+
+EXPOSE 7600 7800 7843
+
+RUN echo ". /opt/ibm/ace-12/server/bin/mqsiprofile" >> /home/aceuser/.bashrc 
+
+ENTRYPOINT ["ace_manage.sh"]

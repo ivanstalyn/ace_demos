@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
+  xmlns:fn="http://www.w3.org/2005/xpath-functions"
+  xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions"
+  xmlns:isofmt="http://www.ibm.com/dfdl/ACEDEMO_Format"
+  xmlns:cabecera="http://www.ibm.com/dfdl/Cabecera_Type"
+  xmlns:cliente_consulta_respuesta="http://www.ibm.com/dfdl/CLIENTE_CONSULTA_RESPUESTA_Type"
+  xmlns:factura_consulta_respuesta="http://www.ibm.com/dfdl/FACTURA_CONSULTA_RESPUESTA_Type">
+
+  <xs:import namespace="http://www.ibm.com/dfdl/ACEDEMO_Format"
+    schemaLocation="../Common/ACEDEMO_Format.xsd" />
+
+  <xs:import namespace="http://www.ibm.com/dfdl/Cabecera_Type"
+    schemaLocation="../Cabecera/cabecera.xsd" />
+  
+  <xs:import namespace="http://www.ibm.com/dfdl/CLIENTE_CONSULTA_RESPUESTA_Type"
+    schemaLocation="../Transacciones/cliente_consulta_respuesta.xsd" />
+
+  <xs:import namespace="http://www.ibm.com/dfdl/FACTURA_CONSULTA_RESPUESTA_Type"
+    schemaLocation="../Transacciones/factura_consulta_respuesta.xsd" />
+  
+
+  <xs:annotation>
+
+    <xs:appinfo source="http://www.ogf.org/dfdl/">
+
+      <dfdl:format ref="isofmt:ACEDEMO_Format" />
+
+    </xs:appinfo>
+
+  </xs:annotation>
+
+
+  <xs:group name="CabeceraResp">
+
+    <xs:sequence dfdl:separator="">
+
+      <xs:element dfdl:lengthKind="implicit" dfdl:lengthUnits="characters"
+        minOccurs="1" name="CABECERA" type="cabecera:Cabecera_Type" />
+
+    </xs:sequence>
+
+  </xs:group>
+
+  <xs:group name="TransaccionesResp">
+
+    <xs:sequence>
+
+      <xs:element dfdl:lengthKind="implicit" dfdl:lengthUnits="characters"
+        dfdl:occursCount="{xs:nonNegativeInteger(if (fn:contains('1001',/ACEDEMO_RESPONSE/CABECERA/TIPO_TRANSACCION)) then 1 else 0)}"
+        minOccurs="0" name="CLIENTE_CONSULTA_RESPUESTA" type="cliente_consulta_respuesta:CLIENTE_CONSULTA_RESPUESTA_Type" />
+
+      <xs:element dfdl:lengthKind="implicit" dfdl:lengthUnits="characters"
+        dfdl:occursCount="{xs:nonNegativeInteger(if (fn:contains('2002',/ACEDEMO_RESPONSE/CABECERA/TIPO_TRANSACCION)) then 1 else 0)}"
+        minOccurs="0" name="FACTURA_CONSULTA_RESPUESTA" type="factura_consulta_respuesta:FACTURA_CONSULTA_RESPUESTA_Type" />
+
+
+    </xs:sequence>
+
+  </xs:group>
+
+  <xs:element dfdl:lengthKind="implicit" dfdl:nilKind="literalValue" dfdl:nilValue=""
+    ibmSchExtn:docRoot="true" name="ACEDEMO_RESPONSE" nillable="false">
+
+    <xs:complexType>
+
+      <xs:sequence dfdl:separator="">
+
+        <xs:group ref="CabeceraResp" />
+        <xs:group ref="TransaccionesResp" />
+
+      </xs:sequence>
+
+    </xs:complexType>
+
+  </xs:element>
+
+</xs:schema>

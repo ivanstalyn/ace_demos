@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+     
+<xs:schema
+    targetNamespace="http://www.ibm.com/dfdl/ACEDEMO_Format"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/">
+    
+    <xs:annotation>
+        <xs:appinfo source="http://www.ogf.org/dfdl/">
+
+            <dfdl:defineVariable defaultValue="false" external="false" name="secondaryBitmapExists" type="xs:boolean"/>
+
+            <dfdl:defineFormat name="ACEDEMO_Format">
+                <dfdl:format encoding="UTF-8" ignoreCase="no" byteOrder="bigEndian"
+                    representation="text" textPadKind="none" textTrimKind="padChar" textBidi="no" escapeSchemeRef=""
+                    textStringJustification="left" truncateSpecifiedLengthString="no" textStringPadCharacter="%SP;"
+                    decimalSigned="yes" textNumberRep="standard" textNumberCheckPolicy="lax" textNumberJustification="right"
+                    textNumberPadCharacter="%SP;" textNumberRoundingMode="roundUp" textNumberRounding="pattern"
+                    textStandardBase="10" textStandardDecimalSeparator="." textStandardExponentCharacter="E" 
+                    textStandardInfinityRep="Inf" textStandardNaNRep="NaN" textStandardGroupingSeparator="," textStandardZeroRep=""
+                    textBooleanJustification="left" textBooleanPadCharacter="%SP;"
+                    calendarPatternKind="implicit" calendarPattern="yyyy-MM-dd'T'HH:mm:ss" calendarCheckPolicy="lax" calendarTimeZone="UTC"
+                    calendarObserveDST="yes" calendarFirstDayOfWeek="Monday" calendarDaysInFirstWeek="4" calendarCenturyStart="53" calendarLanguage="en-US"
+                    textCalendarJustification="left" textBooleanTrueRep="true" textBooleanFalseRep="false" textCalendarPadCharacter="%SP;"
+                    sequenceKind="ordered" floating="no" separator="" separatorPolicy="required" separatorPosition="infix"
+                    choiceLengthKind="explicit" initiatedContent="no"
+                    lengthKind="explicit" prefixIncludesPrefixLength="no" lengthUnits="characters"
+                    alignment="1" alignmentUnits="bytes" leadingSkip="0" trailingSkip="0" fillByte="0"
+                    nilValueDelimiterPolicy="none" emptyValueDelimiterPolicy="none"
+                    initiator="" terminator="" documentFinalTerminatorCanBeMissing="no" outputNewLine="%CR;%LF;"
+                    occursCountKind="expression"
+                    binaryFloatRep="ieee" binaryNumberCheckPolicy="lax" binaryDecimalVirtualPoint="0">
+                </dfdl:format>
+            </dfdl:defineFormat>
+        </xs:appinfo>
+    </xs:annotation>
+        
+</xs:schema>
